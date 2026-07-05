@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Founder — Sitis Christi</title>
+<meta name="description" content="Daniel High founded Sitis Christi after spending time in India in 1999. Twenty-five years later he returned with the same question: what is the simplest help that would make the biggest difference right now?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1d2521;
+    --ink-soft: #4a5650;
+    --paper: #faf7f1;
+    --paper-2: #f1ece2;
+    --line: #e3dccf;
+    --brand: #1f5d4c;
+    --brand-dark: #163f34;
+    --accent: #c9742b;
+    --accent-soft: #f3e2cf;
+    --white: #ffffff;
+    --shadow: 0 10px 40px -18px rgba(22, 63, 52, .35);
+    --radius: 16px;
+    --maxw: 1120px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 { font-family: 'Fraunces', Georgia, serif; line-height: 1.12; letter-spacing: -0.01em; }
+  a { color: var(--brand); text-decoration: none; }
+  img { max-width: 100%; display: block; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  .eyebrow {
+    font-family: 'Inter', sans-serif; font-weight: 600; font-size: .78rem;
+    letter-spacing: .16em; text-transform: uppercase; color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: .5em;
+    font-weight: 600; font-size: .98rem; padding: 14px 26px; border-radius: 999px;
+    transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    cursor: pointer; border: none;
+  }
+  .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 8px 22px -10px rgba(201,116,43,.8); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 26px -10px rgba(201,116,43,.9); }
+  .btn-ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--line); }
+  .btn-ghost:hover { border-color: var(--brand); color: var(--brand); }
+
+  /* ---- NAV ---- */
+  header.nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(250,247,241,.85); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 70px; }
+  .logo { display: flex; align-items: center; gap: 12px; font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.32rem; color: var(--ink); }
+  .logo .mark {
+    width: 38px; height: 38px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+    display: grid; place-items: center; color: #fff; font-size: 1.1rem; flex: none;
+  }
+  .logo small { display:block; font-family:'Inter',sans-serif; font-weight:500; font-size:.62rem; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-soft); margin-top:2px; }
+  nav.links { display: flex; align-items: center; gap: 28px; }
+  nav.links a { color: var(--ink-soft); font-weight: 500; font-size: .94rem; }
+  nav.links a:hover { color: var(--brand); }
+  nav.links a.current { color: var(--brand); font-weight: 600; }
+  .nav-toggle { display:none; background:none; border:none; font-size:1.6rem; color:var(--ink); cursor:pointer; }
+
+  /* ---------- NAV DROPDOWN ---------- */
+  .has-dropdown { position: relative; }
+  .has-dropdown > a { display: flex; align-items: center; gap: 5px; cursor: pointer; }
+  .has-dropdown > a .caret { font-size: .62rem; transition: transform .15s ease; }
+  .has-dropdown:hover > a .caret { transform: rotate(180deg); }
+  .dropdown {
+    list-style: none; position: absolute; top: calc(100% + 14px); left: 50%; transform: translateX(-50%);
+    background: var(--white); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow);
+    min-width: 220px; padding: 8px; opacity: 0; visibility: hidden; transform: translateX(-50%) translateY(6px);
+    transition: opacity .15s ease, transform .15s ease, visibility .15s ease;
+  }
+  .has-dropdown:hover .dropdown { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+  .dropdown a { display: block; padding: 9px 14px; border-radius: 8px; font-size: .9rem; white-space: nowrap; }
+  .dropdown a:hover { background: var(--paper-2); color: var(--brand); }
+
+  @media (max-width: 880px) {
+    nav.links { position: absolute; top: 70px; left: 0; right: 0; flex-direction: column; gap: 0;
+      background: var(--paper); border-bottom: 1px solid var(--line); display: none; padding: 8px 0; }
+    nav.links.open { display: flex; }
+    nav.links a { padding: 12px 24px; width: 100%; }
+    nav.links .btn { margin: 10px 24px; }
+    .nav-toggle { display: block; }
+    .has-dropdown { width: 100%; }
+    .dropdown { position: static; transform: none; opacity: 1; visibility: visible; box-shadow: none;
+      border: none; border-radius: 0; display: none; min-width: 0; padding: 0 0 0 14px; background: transparent; }
+    .has-dropdown.open .dropdown { display: block; }
+    .has-dropdown:hover .dropdown { transform: none; }
+  }
+
+  /* ---- PAGE HERO ---- */
+  .page-hero {
+    position: relative; overflow: hidden;
+    background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(31,93,76,.10), transparent 60%),
+      radial-gradient(900px 500px at 0% 110%, rgba(201,116,43,.10), transparent 55%);
+    padding: 20px 0 20px; text-align: center;
+  }
+  .page-hero h1 { font-size: clamp(2.4rem, 5.5vw, 3.6rem); font-weight: 600; }
+  .page-hero p.lead { font-size: 1.12rem; color: var(--ink-soft); margin: 20px auto 0; max-width: 38em; }
+
+  /* ---- FOUNDER PROFILE ---- */
+  .founder-section { padding: 30px 0; }
+  .founder-grid {
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    gap: 72px;
+    align-items: start;
+  }
+
+  /* Photo column */
+  .founder-photo-col { position: sticky; top: 94px; }
+  .founder-photo {
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    aspect-ratio: 4 / 5;
+  }
+  .founder-photo img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center top;
+  }
+  .founder-name-card {
+    margin-top: 22px;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .founder-name-card h2 { font-size: 1.6rem; font-weight: 600; }
+  .founder-name-card .role {
+    font-family: 'Inter', sans-serif; font-size: .82rem; font-weight: 600;
+    letter-spacing: .13em; text-transform: uppercase; color: var(--accent);
+  }
+
+  /* Text column */
+  .founder-text-col { display: flex; flex-direction: column; gap: 40px; padding-top: 6px; }
+
+  .founder-pull {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+    font-weight: 500;
+    font-style: italic;
+    color: var(--ink);
+    line-height: 1.45;
+    padding-left: 24px;
+    border-left: 3px solid var(--accent);
+  }
+
+  .founder-body p {
+    font-size: 1.08rem;
+    color: var(--ink-soft);
+    line-height: 1.82;
+    margin-bottom: 22px;
+  }
+  .founder-body p:last-child { margin-bottom: 0; }
+
+  /* Milestone timeline */
+  .milestones { display: flex; flex-direction: column; gap: 0; }
+  .milestone {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .milestone:last-child { border-bottom: none; }
+  .milestone-year {
+    font-family: 'Fraunces', serif;
+    font-size: 1.1rem; font-weight: 600;
+    color: var(--brand); padding-top: 2px;
+  }
+  .milestone-text {
+    font-size: .98rem; color: var(--ink-soft); line-height: 1.65;
+  }
+  .milestone-text strong { color: var(--ink); font-weight: 600; }
+
+  @media (max-width: 880px) {
+    .founder-grid { grid-template-columns: 1fr; gap: 40px; }
+    .founder-photo-col { position: static; }
+    .founder-photo { aspect-ratio: 3 / 2; max-height: 400px; }
+    .founder-photo img { object-position: center 20%; }
+  }
+
+  /* ---- QUOTE BAND ---- */
+  .quote-band {
+    background: linear-gradient(160deg, var(--brand) 0%, var(--brand-dark) 100%);
+    color: #fff; text-align: center;
+  }
+  .quote-band .wrap { padding: 64px 24px; }
+  .quote-band p {
+    font-family: 'Fraunces', serif; font-size: clamp(1.3rem, 2.6vw, 1.9rem);
+    font-style: italic; font-weight: 500; max-width: 34em; margin: 0 auto;
+  }
+  .quote-band small {
+    display: block; font-family: 'Inter', sans-serif; font-style: normal;
+    font-size: .82rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+    opacity: .78; margin-top: 18px;
+  }
+
+  /* ---- CTA ---- */
+  .cta-strip { padding: 25px 0; text-align: center; }
+  .cta-strip h2 { font-size: clamp(1.8rem, 3.6vw, 2.5rem); font-weight: 600; margin-bottom: 16px; }
+  .cta-strip p { color: var(--ink-soft); font-size: 1.06rem; max-width: 32em; margin: 0 auto 30px; }
+  .cta-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  /* ---- FOOTER ---- */
+  footer { background: var(--ink); color: rgba(255,255,255,.75); padding: 60px 0 30px; }
+  .foot-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,.12); }
+  footer .logo { color: #fff; margin-bottom: 14px; }
+  footer .logo small { color: rgba(255,255,255,.6); }
+  footer p { font-size: .96rem; }
+  footer h4 { color: #fff; font-family:'Inter',sans-serif; font-size:.82rem; letter-spacing:.14em; text-transform:uppercase; margin-bottom: 16px; }
+  footer ul { list-style: none; }
+  footer ul li { margin-bottom: 10px; }
+  footer ul a { color: rgba(255,255,255,.75); }
+  footer ul a:hover { color: var(--accent); }
+  .foot-bottom { display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; padding-top: 24px; font-size:.85rem; color: rgba(255,255,255,.5); }
+  @media (max-width: 760px) { .foot-grid { grid-template-columns: 1fr; gap: 30px; } }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="logo">
+      <img style="max-width: 123px;" src="./images/logo.png">
+    </a>
+    <button class="nav-toggle" aria-label="Menu" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
+    <nav class="links" id="menu">
+      <a href="index.html">Home</a>
+      <div class="has-dropdown">
+        <a href="#impact">Impact Report <span class="caret">▾</span></a>
+        <ul class="dropdown">
+          <li><a href="2024.html">2024</a></li>
+          <li><a href="2025.html">2025</a></li>
+          <li><a href="2026.html">2026</a></li>
+          <li><a href="unfinished_stories.html">Unfinished Stories</a></li>
+          <li><a href="updates.html">Updates</a></li>
+        </ul>
+      </div>
+      <div class="has-dropdown">
+        <a href="about.html">About Us <span class="caret">▾</span></a>
+        <ul class="dropdown">
+            <li><a href="about.html">Our Values</a></li>
+          <li><a href="founder.html">About the Founder</a></li>
+          <li><a href="partners.html">Our Partners</a></li>
+          <li><a href="board.html">Board of Directors</a></li>
+        </ul>
+      </div>
+      <a href="donate.html" class="btn btn-primary">Donate</a>
+    </nav>
+  </div>
+</header>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="wrap">
+    <div class="eyebrow">About the Founder</div>
+    <h1>Daniel High</h1>
+  </div>
+</section>
+
+<!-- FOUNDER PROFILE -->
+<section class="founder-section">
+  <div class="wrap">
+    <div class="founder-grid">
+
+      <!-- LEFT: Photo + Name Card -->
+      <div class="founder-photo-col">
+        <div class="founder-photo">
+          <img src="./images/daniel.jpeg" alt="Daniel High — Founder of Sitis Christi">
+        </div>
+        <div class="founder-name-card">
+          <span class="role">Founder</span>
+          <h2>Daniel High</h2>
+        </div>
+      </div>
+
+      <!-- RIGHT: Text -->
+      <div class="founder-text-col">
+
+        <p class="founder-pull">"In 1999, I spent two months in India and met families living on sidewalks."</p>
+
+        <div class="founder-body">
+          <p>I saw how much a small, practical act of support can matter when it arrives at the right moment. Twenty-five years later, I returned with the same question: what is the simplest help that would make the biggest difference right now?</p>
+          <p>Since then, the work has focused on direct, specific needs — temporary shelter materials during monsoon season, clean water for a school in Sierra Leone, and support for people seeking prosthetic care. My goal is to keep the attention where it belongs: on the people affected and on the small hinges that can change what comes next.</p>
+          <p>I do this work by building relationships with trusted local partners — community leaders, schools, clinics, and small organizations — who understand the context and can move quickly. Together we identify the most urgent, practical needs, agree on a simple plan, and keep communication direct. They carry out most of the work on the ground, while I help connect resources, cover costs, and act as a witness to their lives and needs, serving as a bridge between their world and mine.</p>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-strip" style="color: #fff;background: #174438;">
+  <div class="wrap">
+    <h2>See the work in action.</h2>
+    <p style="color: #fff;">Meet the on-the-ground partners Daniel works with, read about the people helped, or make a gift that puts this work in motion.</p>
+    <div class="cta-row">
+      <a style="color: #fff;" href="partners.html" class="btn btn-ghost">Meet the partners</a>
+      <a href="donate.html" class="btn btn-primary">Donate now →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="logo"><span class="mark">✦</span><span>Sitis Christi<small>Lives turn on small hinges</small></span></div>
+        <p>A faith-based humanitarian effort funding small, timely interventions for people at the edge of survival — in India, Sierra Leone, and Mexico.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="#impact">Impact Report</a></li>
+          <li><a href="updates.html">Updates</a></li>
+          <li><a href="founder.html">Founder</a></li>
+          <li><a href="partners.html">Partners</a></li>
+          <li><a href="board.html">Board</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:danielhigh@gmail.com">danielhigh@gmail.com</a></li>
+          <li><a href="tel:612-500-8766">612-500-8766</a></li>
+          <li>Bloomington, Minnesota, USA</li>
+          <li><a target="_blank" href="https://www.youtube.com/@SitisChristi">▶️ YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Sitis Christi. All rights reserved.</span>
+      <span>Nonprofit information &amp; tax status available on request.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Close mobile menu on link click (but not when opening a dropdown parent)
+  document.querySelectorAll('#menu a').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const parent = a.closest('.has-dropdown');
+      if (parent && window.innerWidth <= 880 && a.parentElement === parent) {
+        e.preventDefault();
+        parent.classList.toggle('open');
+        return;
+      }
+      document.getElementById('menu').classList.remove('open');
+    });
+  });
+</script>
+</body>
+</html>

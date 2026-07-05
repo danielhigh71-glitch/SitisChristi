@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Updates — Sitis Christi</title>
+<meta name="description" content="The latest updates from Sitis Christi — wheelchair deliveries, prosthetic recipients, follow-ups from India, and community gatherings.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1d2521;
+    --ink-soft: #4a5650;
+    --paper: #faf7f1;
+    --paper-2: #f1ece2;
+    --line: #e3dccf;
+    --brand: #1f5d4c;
+    --brand-dark: #163f34;
+    --accent: #c9742b;
+    --accent-soft: #f3e2cf;
+    --white: #ffffff;
+    --shadow: 0 10px 40px -18px rgba(22,63,52,.32);
+    --radius: 16px;
+    --maxw: 1120px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', system-ui, sans-serif; color: var(--ink); background: var(--paper); line-height: 1.65; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3, h4 { font-family: 'Fraunces', Georgia, serif; line-height: 1.12; letter-spacing: -.01em; }
+  a { color: var(--brand); text-decoration: none; }
+  img { max-width: 100%; display: block; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  .eyebrow { font-family: 'Inter', sans-serif; font-weight: 600; font-size: .78rem; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+  .btn { display: inline-flex; align-items: center; gap: .5em; font-weight: 600; font-size: .98rem; padding: 14px 26px; border-radius: 999px; transition: transform .15s, box-shadow .15s; cursor: pointer; border: none; }
+  .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 8px 22px -10px rgba(201,116,43,.8); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 26px -10px rgba(201,116,43,.9); }
+  .btn-ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--line); }
+  .btn-ghost:hover { border-color: var(--brand); color: var(--brand); }
+
+  /* NAV */
+  header.nav { position: sticky; top: 0; z-index: 50; background: rgba(250,247,241,.85); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 70px; }
+  .logo { display: flex; align-items: center; gap: 12px; font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.32rem; color: var(--ink); }
+  .logo .mark { width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg, var(--brand), var(--brand-dark)); display: grid; place-items: center; color: #fff; font-size: 1.1rem; flex: none; }
+  .logo small { display: block; font-family: 'Inter', sans-serif; font-weight: 500; font-size: .62rem; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-soft); margin-top: 2px; }
+  nav.links { display: flex; align-items: center; gap: 28px; }
+  nav.links a { color: var(--ink-soft); font-weight: 500; font-size: .94rem; }
+  nav.links a:hover { color: var(--brand); }
+  nav.links a.current { color: var(--brand); font-weight: 600; }
+  .nav-toggle { display: none; background: none; border: none; font-size: 1.6rem; color: var(--ink); cursor: pointer; }
+
+  /* NAV DROPDOWN */
+  .has-dropdown { position: relative; }
+  .has-dropdown > a { display: flex; align-items: center; gap: 5px; cursor: pointer; }
+  .has-dropdown > a .caret { font-size: .62rem; transition: transform .15s ease; }
+  .has-dropdown:hover > a .caret { transform: rotate(180deg); }
+  .dropdown { list-style: none; position: absolute; top: calc(100% + 14px); left: 50%; transform: translateX(-50%); background: var(--white); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); min-width: 220px; padding: 8px; opacity: 0; visibility: hidden; transform: translateX(-50%) translateY(6px); transition: opacity .15s ease, transform .15s ease, visibility .15s ease; }
+  .has-dropdown:hover .dropdown { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+  .dropdown a { display: block; padding: 9px 14px; border-radius: 8px; font-size: .9rem; white-space: nowrap; }
+  .dropdown a:hover { background: var(--paper-2); color: var(--brand); }
+
+  @media (max-width: 880px) {
+    nav.links { position: absolute; top: 70px; left: 0; right: 0; flex-direction: column; gap: 0; background: var(--paper); border-bottom: 1px solid var(--line); display: none; padding: 8px 0; }
+    nav.links.open { display: flex; }
+    nav.links a { padding: 12px 24px; width: 100%; }
+    nav.links .btn { margin: 10px 24px; }
+    .nav-toggle { display: block; }
+    .has-dropdown { width: 100%; }
+    .dropdown { position: static; transform: none; opacity: 1; visibility: visible; box-shadow: none; border: none; border-radius: 0; display: none; min-width: 0; padding: 0 0 0 14px; background: transparent; }
+    .has-dropdown.open .dropdown { display: block; }
+    .has-dropdown:hover .dropdown { transform: none; }
+  }
+
+  /* HERO */
+  .page-hero { position: relative; overflow: hidden; background: radial-gradient(1200px 600px at 80% -10%, rgba(31,93,76,.10), transparent 60%), radial-gradient(900px 500px at 0% 110%, rgba(201,116,43,.10), transparent 55%); padding: 16px 0 10px; text-align: center; }
+  .page-hero h1 { font-size: 32px; font-weight: 600; }
+  .page-hero p.lead { font-size: 1.12rem; color: var(--ink-soft); margin: 20px auto 0; max-width: 40em; }
+.updates-section {
+    padding: 30px 0 100px;
+    padding-bottom: 0px !important;
+}
+  /* TIMELINE LAYOUT */
+  .updates-section { padding: 30px 0 100px; }
+  .timeline { display: flex; flex-direction: column; gap: 0; max-width: 860px; margin: 0 auto; }
+
+  /* ENTRY */
+  .entry { display: grid; grid-template-columns: 120px 1fr; gap: 0; position: relative; }
+  .entry:not(:last-child)::before { content: ''; position: absolute; left: 59px; top: 52px; bottom: -24px; width: 2px; background: var(--line); z-index: 0; }
+
+  .entry-date-col { display: flex; flex-direction: column; align-items: center; padding-top: 16px; position: relative; z-index: 1; }
+  .entry-dot { width: 18px; height: 18px; border-radius: 50%; background: var(--brand); border: 3px solid var(--paper); box-shadow: 0 0 0 2px var(--brand); flex: none; }
+  .entry-dot.accent { background: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
+  .entry-date { font-family: 'Inter', sans-serif; font-size: .72rem; font-weight: 700; color: var(--ink-soft); text-align: center; margin-top: 8px; line-height: 1.4; letter-spacing: .04em; }
+
+  .entry-body { padding: 0 0 52px 28px; }
+  .entry-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; transition: box-shadow .2s, transform .2s; }
+  .entry-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+
+  .entry-card-text { padding: 28px 28px 24px; display: flex; flex-direction: column; gap: 12px; }
+  .entry-tag { display: inline-flex; align-items: center; gap: 6px; font-family: 'Inter', sans-serif; font-size: .73rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 4px 12px; border-radius: 999px; width: fit-content; }
+  .entry-tag.sl { background: rgba(31,93,76,.1); color: var(--brand); }
+  .entry-tag.india { background: var(--accent-soft); color: var(--accent); }
+  .entry-tag.us { background: rgba(29,37,33,.07); color: var(--ink-soft); }
+  .entry-tag::before { content: '📍'; }
+  .entry-tag.us::before { content: '🇺🇸'; }
+
+  .entry-card-text h3 { font-size: 1.3rem; font-weight: 600; }
+  .entry-card-text p { color: var(--ink-soft); font-size: .99rem; line-height: 1.78; }
+  .entry-card-text .pull { font-family: 'Fraunces', serif; font-style: italic; font-size: 1.08rem; color: var(--ink); padding: 14px 18px; border-left: 3px solid var(--accent); background: var(--accent-soft); border-radius: 0 10px 10px 0; }
+
+  /* Single image */
+  .entry-img img { width: 100%; max-height: 420px; object-fit: cover; object-position: center top; }
+
+  /* 2-col photo grid */
+  .entry-img-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .entry-img-grid img { width: 100%; height: 300px; object-fit: cover; object-position: center top; }
+
+  /* 4-col recipient grid */
+  .recipients-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; padding: 0 28px 28px; }
+  .recipient-card { display: flex; flex-direction: column; gap: 10px; }
+  .recipient-card img { width: 100%; aspect-ratio: 3/4; object-fit: cover; object-position: center top; border-radius: 10px; border: 1px solid var(--line); }
+  .recipient-card h4 { font-size: 1rem; font-weight: 600; }
+  .recipient-card p { font-size: .85rem; color: var(--ink-soft); line-height: 1.55; }
+  @media (max-width: 640px) { .recipients-grid { grid-template-columns: 1fr 1fr; } }
+
+  @media (max-width: 700px) {
+    .entry { grid-template-columns: 72px 1fr; }
+    .entry:not(:last-child)::before { left: 35px; }
+    .entry-date { font-size: .65rem; }
+    .entry-img-grid { grid-template-columns: 1fr; }
+    .entry-img-grid img { height: 220px; }
+  }
+  @media (max-width: 480px) {
+    .entry { grid-template-columns: 56px 1fr; }
+    .entry:not(:last-child)::before { left: 27px; }
+    .entry-body { padding-left: 16px; }
+  }
+
+  /* QUOTE BAND */
+  .quote-band { background: linear-gradient(160deg, var(--brand) 0%, var(--brand-dark) 100%); color: #fff; text-align: center; }
+  .quote-band .wrap { padding: 64px 24px; }
+  .quote-band p { font-family: 'Fraunces', serif; font-size: clamp(1.3rem, 2.6vw, 1.9rem); font-style: italic; font-weight: 500; max-width: 34em; margin: 0 auto; }
+  .quote-band small { display: block; font-family: 'Inter', sans-serif; font-style: normal; font-size: .82rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; opacity: .78; margin-top: 18px; }
+
+  /* CTA */
+  .cta-strip { padding: 25px 0; text-align: center; }
+  .cta-strip h2 { font-size: clamp(1.8rem, 3.6vw, 2.5rem); font-weight: 600; margin-bottom: 16px; }
+  .cta-strip p { color: var(--ink-soft); font-size: 1.06rem; max-width: 32em; margin: 0 auto 30px; }
+  .cta-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  /* FOOTER */
+  footer { background: var(--ink); color: rgba(255,255,255,.75); padding: 60px 0 30px; }
+  .foot-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,.12); }
+  footer .logo { color: #fff; margin-bottom: 14px; }
+  footer .logo small { color: rgba(255,255,255,.6); }
+  footer p { font-size: .96rem; }
+  footer h4 { color: #fff; font-family: 'Inter', sans-serif; font-size: .82rem; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 16px; }
+  footer ul { list-style: none; }
+  footer ul li { margin-bottom: 10px; }
+  footer ul a { color: rgba(255,255,255,.75); }
+  footer ul a:hover { color: var(--accent); }
+  .foot-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding-top: 24px; font-size: .85rem; color: rgba(255,255,255,.5); }
+  @media (max-width: 760px) { .foot-grid { grid-template-columns: 1fr; gap: 30px; } }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html#home" class="logo">
+      <img style="max-width: 123px;" src="./images/logo.png">
+    </a>
+    <button class="nav-toggle" aria-label="Menu" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
+    <nav class="links" id="menu">
+      <a href="index.html">Home</a>
+      <div class="has-dropdown">
+        <a href="index.html#impact">Impact Report <span class="caret">▾</span></a>
+        <ul class="dropdown">
+          <li><a href="2024.html">2024</a></li>
+          <li><a href="2025.html">2025</a></li>
+          <li><a href="2026.html">2026</a></li>
+          <li><a href="unfinished_stories.html">Unfinished Stories</a></li>
+          <li><a href="updates.html" class="current">Updates</a></li>
+        </ul>
+      </div>
+      <div class="has-dropdown">
+        <a href="about.html">About Us <span class="caret">▾</span></a>
+        <ul class="dropdown">
+            <li><a href="about.html">Our Values</a></li>
+          <li><a href="founder.html">About the Founder</a></li>
+          <li><a href="partners.html">Our Partners</a></li>
+          <li><a href="board.html">Board of Directors</a></li>
+        </ul>
+      </div>
+      <a href="donate.html" class="btn btn-primary">Donate</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="wrap">
+    <div class="eyebrow">Updates</div>
+    <h1>What has happened and what is next.</h1>
+    <p class="lead">Field updates from Sierra Leone, India, and the communities we serve — in reverse chronological order, as they happened.</p>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="updates-section">
+  <div class="wrap">
+    <div class="timeline">
+
+      <!-- MAY 6 -->
+      <div class="entry">
+        <div class="entry-date-col">
+          <div class="entry-dot"></div>
+          <div class="entry-date">May 6<br>2026</div>
+        </div>
+        <div class="entry-body">
+          <div class="entry-card">
+            <div class="entry-img">
+              <img src="./images/upd_image1.jpg" alt="Joseph receiving his wheelchair surrounded by classmates and family">
+            </div>
+            <div class="entry-card-text">
+              <span class="entry-tag sl">Sierra Leone</span>
+              <h3>Wheelchair Delivery for Joseph</h3>
+              <p>Sitis Christi donated for a wheelchair for 13-year-old Joseph, who could walk only short distances because of a growth condition. Joseph was surrounded by classmates and his parents who joined a celebration of presenting the wheelchair to Joseph.</p>
+              <div class="pull">"We are overwhelmed with what we have received." — Joseph's father</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- APRIL 23 -->
+      <div class="entry">
+        <div class="entry-date-col">
+          <div class="entry-dot accent"></div>
+          <div class="entry-date">Apr 23<br>2026</div>
+        </div>
+        <div class="entry-body">
+          <div class="entry-card">
+            <div class="entry-img">
+              <img src="./images/upd_image2.png" alt="Mina with her family at the waste picker colony in Pondicherry">
+            </div>
+            <div class="entry-card-text">
+              <span class="entry-tag india">India</span>
+              <h3>Follow-up on Mina — Sad News</h3>
+              <p>During the 2024 trip, I met Mina, a thirteen-year-old girl who spent 12 hours a day digging through garbage to earn money to help feed her family. When asked about her dream for the future, she said she wanted to become a police officer. Watching her story again recently was a reminder of how much potential she has, and how much one intervention could matter.</p>
+              <p>I reached out to my contact in Pondicherry asking him to find Mina again and explore what support might be possible. He returned with sad news: when he went back to the waste picker colony, he learned that Mina's father had recently died, and that Mina and her mother had moved to an unknown location. If we are able to locate Mina, we will share an update.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- APRIL 15 -->
+      <div class="entry">
+        <div class="entry-date-col">
+          <div class="entry-dot"></div>
+          <div class="entry-date">Apr 15<br>2026</div>
+        </div>
+        <div class="entry-body">
+          <div class="entry-card">
+            <div class="entry-img">
+              <img src="./images/upd_image3.jpg" alt="Sonia standing with her motorbike in Pondicherry">
+            </div>
+            <div class="entry-card-text">
+              <span class="entry-tag india">India</span>
+              <h3>Follow-up on Sonia — Positive News</h3>
+              <p>I asked my contacts in Pondicherry to visit the waste picker colony and share updates on people I met in 2024. They returned with some positive news.</p>
+              <p>In 2024, I met Sonia, a single mother who had been sleeping on the streets. She told me that a motorbike would change her life more than anything, giving her a way to travel from the shelter to the beach to sell her goods. Eighteen months later, Sonia still has her bike and uses it regularly to commute from the shelter to spots where she sells toys to tourists.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MARCH 31 -->
+      <div class="entry">
+        <div class="entry-date-col">
+          <div class="entry-dot"></div>
+          <div class="entry-date">Mar 31<br>2026</div>
+        </div>
+        <div class="entry-body">
+          <div class="entry-card">
+            <div class="entry-card-text">
+              <span class="entry-tag sl">Sierra Leone</span>
+              <h3>Prosthetic Requests — 4 Recipients Selected</h3>
+              <p>Eighteen amputees have reached out requesting assistance with prosthetic legs. At this time, we have enough funds to provide prosthetics for four people. Choosing who will receive them first was difficult; we prioritized those who are primary providers for others and who would benefit most immediately. We'll continue working to raise support so we can help more people as soon as possible.</p>
+              <p>These amputees will soon be notified that they've been selected to receive prosthetic legs. Next, they'll be fitted for custom prosthetics and begin physical therapy. Please be patient for these individuals to go through the process.</p>
+            </div>
+            <div class="recipients-grid">
+              <div class="recipient-card">
+                <img src="./images/upd_image4.jpeg" alt="Mary — single mother and sole provider for her one-year-old son">
+                <h4>Mary</h4>
+                <p>Single mother and sole provider for her one-year-old son. She recently lost everything in a fire.</p>
+              </div>
+              <div class="recipient-card">
+                <img src="./images/upd_image5.jpg" alt="Masaray — widow and sole provider of three children">
+                <h4>Masaray</h4>
+                <p>Widow and sole provider of three children.</p>
+              </div>
+              <div class="recipient-card">
+                <img src="./images/upd_image6.jpeg" alt="Koroma — teacher who walks to school and stands long hours">
+                <h4>Koroma</h4>
+                <p>A teacher. A prosthetic leg will help him walk to school and stand long hours while teaching.</p>
+              </div>
+              <div class="recipient-card">
+                <img src="./images/upd_image7.jpeg" alt="Maxwell — barber who works with a razor and a crutch at the same time">
+                <h4>Maxwell</h4>
+                <p>A barber. His job requires standing for long periods. Working with a razor and a crutch at the same time is very difficult.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MARCH 27 -->
+      <div class="entry">
+        <div class="entry-date-col">
+          <div class="entry-dot"></div>
+          <div class="entry-date">Mar 27<br>2026</div>
+        </div>
+        <div class="entry-body">
+          <div class="entry-card">
+            <div class="entry-img">
+              <img src="./images/upd_image8.png" alt="Ten amputee men at the Waterloo shelter receiving food support">
+            </div>
+            <div class="entry-card-text">
+              <span class="entry-tag sl">Sierra Leone</span>
+              <h3>March Donations + Food Support for the Shelter</h3>
+              <p>Thanks to the donations received in March during the Pizza Ranch gathering, ten amputees living in a Sierra Leone shelter will receive food support for the next three months.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MARCH 22 -->
+      <div class="entry">
+        <div class="entry-date-col">
+          <div class="entry-dot"></div>
+          <div class="entry-date">Mar 22<br>2026</div>
+        </div>
+        <div class="entry-body">
+          <div class="entry-card">
+            <div class="entry-img">
+              <img src="./images/upd_image9.jpeg" alt="Daniel presenting at Pizza Ranch in Le Sueur to a group of old friends">
+            </div>
+            <div class="entry-card-text">
+              <span class="entry-tag us">Le Sueur, Minnesota</span>
+              <h3>Old Friends at Pizza Ranch</h3>
+              <p>A group of old friends from Le Sueur joined the first presentation at Pizza Ranch in Le Sueur, and it was genuinely good to see so many familiar faces again. Thank you to everyone who showed up, listened, and supported this work.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE BAND -->
+<section class="quote-band">
+  <div class="wrap">
+    <p>"Each update is a small hinge — a moment when something shifted for someone who had no other options."</p>
+    <small>Sitis Christi — Field Updates</small>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-strip">
+  <div class="wrap">
+    <h2>More updates are coming.</h2>
+    <p>David is still in therapy. The four prosthetic recipients are being fitted. The work is still in motion — and every gift keeps it going.</p>
+    <div class="cta-row">
+      <a href="2026.html" class="btn btn-ghost">See 2026 full report</a>
+      <a href="partners.html" class="btn btn-ghost">Meet our partners</a>
+      <a href="donate.html" class="btn btn-primary">Donate now →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="logo"><span class="mark">✦</span><span>Sitis Christi<small>Lives turn on small hinges</small></span></div>
+        <p>A faith-based humanitarian effort funding small, timely interventions for people at the edge of survival — in India, Sierra Leone, and Mexico.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="#impact">Impact Report</a></li>
+          <li><a href="updates.html">Updates</a></li>
+          <li><a href="founder.html">Founder</a></li>
+          <li><a href="partners.html">Partners</a></li>
+          <li><a href="board.html">Board</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:danielhigh@gmail.com">danielhigh@gmail.com</a></li>
+          <li><a href="tel:612-500-8766">612-500-8766</a></li>
+          <li>Bloomington, Minnesota, USA</li>
+          <li><a target="_blank" href="https://www.youtube.com/@SitisChristi">▶️ YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Sitis Christi. All rights reserved.</span>
+      <span>Nonprofit information &amp; tax status available on request.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('#menu a').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const parent = a.closest('.has-dropdown');
+      if (parent && window.innerWidth <= 880 && a.parentElement === parent) {
+        e.preventDefault();
+        parent.classList.toggle('open');
+        return;
+      }
+      document.getElementById('menu').classList.remove('open');
+    });
+  });
+</script>
+</body>
+</html>

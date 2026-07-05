@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us — Sitis Christi</title>
+<meta name="description" content="Sitis Christi is built on Christ's words: 'I was thirsty and you gave me something to drink.' Learn why we respond to needs, why we're that somebody, and why lives turn on small hinges.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1d2521;
+    --ink-soft: #4a5650;
+    --paper: #faf7f1;
+    --paper-2: #f1ece2;
+    --line: #e3dccf;
+    --brand: #1f5d4c;       /* deep green — trust, growth */
+    --brand-dark: #163f34;
+    --accent: #c9742b;      /* warm amber — hope, hinge */
+    --accent-soft: #f3e2cf;
+    --white: #ffffff;
+    --shadow: 0 10px 40px -18px rgba(22, 63, 52, .35);
+    --radius: 16px;
+    --maxw: 1120px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4, .display { font-family: 'Fraunces', Georgia, serif; line-height: 1.12; letter-spacing: -0.01em; }
+  a { color: var(--brand); text-decoration: none; }
+  img { max-width: 100%; display: block; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  .eyebrow {
+    font-family: 'Inter', sans-serif; font-weight: 600; font-size: .78rem;
+    letter-spacing: .16em; text-transform: uppercase; color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: .5em;
+    font-weight: 600; font-size: .98rem; padding: 14px 26px; border-radius: 999px;
+    transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    cursor: pointer; border: none;
+  }
+  .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 8px 22px -10px rgba(201,116,43,.8); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 26px -10px rgba(201,116,43,.9); }
+  .btn-ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--line); }
+  .btn-ghost:hover { border-color: var(--brand); color: var(--brand); }
+
+  /* ---------- NAV ---------- */
+  header.nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(250,247,241,.85); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 70px; }
+  .logo { display: flex; align-items: center; gap: 12px; font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.32rem; color: var(--ink); }
+  .logo .mark {
+    width: 38px; height: 38px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+    display: grid; place-items: center; color: #fff; font-size: 1.1rem; flex: none;
+  }
+  .logo small { display:block; font-family:'Inter',sans-serif; font-weight:500; font-size:.62rem; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-soft); margin-top:2px;}
+  nav.links { display: flex; align-items: center; gap: 28px; }
+  nav.links a { color: var(--ink-soft); font-weight: 500; font-size: .94rem; }
+  nav.links a:hover { color: var(--brand); }
+  nav.links a.current { color: var(--brand); }
+  .nav-toggle { display:none; background:none; border:none; font-size:1.6rem; color:var(--ink); cursor:pointer; }
+
+  /* ---------- NAV DROPDOWN ---------- */
+  .has-dropdown { position: relative; }
+  .has-dropdown > a { display: flex; align-items: center; gap: 5px; cursor: pointer; }
+  .has-dropdown > a .caret { font-size: .62rem; transition: transform .15s ease; }
+  .has-dropdown:hover > a .caret { transform: rotate(180deg); }
+  .dropdown {
+    list-style: none; position: absolute; top: calc(100% + 14px); left: 50%; transform: translateX(-50%);
+    background: var(--white); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow);
+    min-width: 220px; padding: 8px; opacity: 0; visibility: hidden; transform: translateX(-50%) translateY(6px);
+    transition: opacity .15s ease, transform .15s ease, visibility .15s ease;
+  }
+  .has-dropdown:hover .dropdown { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+  .dropdown a { display: block; padding: 9px 14px; border-radius: 8px; font-size: .9rem; white-space: nowrap; }
+  .dropdown a:hover { background: var(--paper-2); color: var(--brand); }
+
+  @media (max-width: 880px) {
+    nav.links { position: absolute; top: 70px; left: 0; right: 0; flex-direction: column; gap: 0;
+      background: var(--paper); border-bottom: 1px solid var(--line); display: none; padding: 8px 0; }
+    nav.links.open { display: flex; }
+    nav.links a { padding: 12px 24px; width: 100%; }
+    nav.links .btn { margin: 10px 24px; }
+    .nav-toggle { display: block; }
+    .has-dropdown { width: 100%; }
+    .dropdown { position: static; transform: none; opacity: 1; visibility: visible; box-shadow: none;
+      border: none; border-radius: 0; display: none; min-width: 0; padding: 0 0 0 14px; background: transparent; }
+    .has-dropdown.open .dropdown { display: block; }
+    .has-dropdown:hover .dropdown { transform: none; }
+  }
+
+  /* ---------- PAGE HERO ---------- */
+  .page-hero { position: relative; overflow: hidden; background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(31,93,76,.10), transparent 60%),
+      radial-gradient(900px 500px at 0% 110%, rgba(201,116,43,.10), transparent 55%);
+    padding: 15px 0 30px 0px; text-align: center;
+  }
+  .page-hero h1 { font-size: clamp(2.4rem, 5.5vw, 3.6rem); font-weight: 600; }
+  .page-hero p.lead { font-size: 1.12rem; color: var(--ink-soft); margin: 20px auto 0; max-width: 38em; }
+
+  /* ---------- SECTION ---------- */
+  section.block { padding: 34px 0; }
+  .section-head { max-width: 40em; margin-bottom: 48px; }
+  .section-head h2 { margin-top: 22px;font-size: clamp(2rem, 4vw, 2.9rem); font-weight: 600; }
+  .section-head p { color: var(--ink-soft); font-size: 1.1rem; margin-top: 14px; }
+  .alt { background: var(--paper-2); }
+
+  /* ---------- ABOUT / PILLARS ---------- */
+  .pillars { display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; }
+  .pillar { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 32px 28px; }
+  .pillar .ic { width: 46px; height: 46px; border-radius: 12px; background: var(--accent-soft); color: var(--accent);
+    display: grid; place-items: center; font-size: 1.4rem; margin-bottom: 18px; }
+  .pillar h3 { font-size: 1.32rem; font-weight: 600; margin-bottom: 8px; }
+  .pillar p { color: var(--ink-soft); font-size: .99rem; }
+  .hinge-callout { margin-top: 36px; background: var(--white); border: 1px solid var(--line); border-left: 4px solid var(--accent);
+    border-radius: var(--radius); padding: 30px 32px; display:grid; grid-template-columns:1fr 1fr; gap: 30px; }
+  .hinge-callout .amt { font-family:'Fraunces',serif; font-size: 1.5rem; color: var(--brand); font-weight: 600; }
+  .hinge-callout p { color: var(--ink-soft); margin-top: 6px; }
+  @media (max-width: 900px) { .pillars { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 540px) { .pillars { grid-template-columns: 1fr; } }
+  @media (max-width: 760px) { .hinge-callout { grid-template-columns: 1fr; } }
+
+  /* ---------- VERSE BAND ---------- */
+  .verse-band { background: linear-gradient(160deg, var(--brand) 0%, var(--brand-dark) 100%); color: #fff; text-align: center; }
+  .verse-band .wrap { padding: 64px 24px; }
+  .verse-band p { font-family:'Fraunces',serif; font-size: clamp(1.4rem, 3vw, 2rem); font-style: italic; font-weight: 500; max-width: 28em; margin: 0 auto; }
+  .verse-band span { display:block; font-family:'Inter',sans-serif; font-style:normal; font-size:.82rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase; opacity:.78; margin-top:18px; }
+
+  /* ---------- CTA STRIP ---------- */
+  .cta-strip { text-align: center; }
+  .cta-strip h2 { font-size: clamp(1.8rem, 3.6vw, 2.5rem); font-weight: 600; margin-bottom: 16px; }
+  .cta-strip p { color: var(--ink-soft); font-size: 1.06rem; max-width: 32em; margin: 0 auto 30px; }
+  .cta-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  /* ---------- FOOTER ---------- */
+  footer { background: var(--ink); color: rgba(255,255,255,.75); padding: 60px 0 30px; }
+  .foot-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,.12); }
+  footer .logo { color: #fff; margin-bottom: 14px; }
+  footer .logo small { color: rgba(255,255,255,.6); }
+  footer p { font-size: .96rem; }
+  footer h4 { color: #fff; font-family:'Inter',sans-serif; font-size:.82rem; letter-spacing:.14em; text-transform:uppercase; margin-bottom: 16px; }
+  footer ul { list-style: none; }
+  footer ul li { margin-bottom: 10px; }
+  footer ul a { color: rgba(255,255,255,.75); }
+  footer ul a:hover { color: var(--accent); }
+  .foot-bottom { display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; padding-top: 24px; font-size:.85rem; color: rgba(255,255,255,.5); }
+  @media (max-width: 760px) { .foot-grid { grid-template-columns: 1fr; gap: 30px; } }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="#home" class="logo">
+      <img style="max-width: 123px;" src="./images/logo.png">
+    </a>
+    <button class="nav-toggle" aria-label="Menu" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
+    <nav class="links" id="menu">
+      <a href="index.html">Home</a>
+      <div class="has-dropdown">
+        <a href="#impact">Impact Report <span class="caret">▾</span></a>
+        <ul class="dropdown">
+          <li><a href="2024.html">2024</a></li>
+          <li><a href="2025.html">2025</a></li>
+          <li><a href="2026.html">2026</a></li>
+          <li><a href="unfinished_stories.html">Unfinished Stories</a></li>
+          <li><a href="updates.html">Updates</a></li>
+        </ul>
+      </div>
+      <div class="has-dropdown">
+        <a href="about.html">About Us <span class="caret">▾</span></a>
+        <ul class="dropdown">
+            <li><a href="about.html">Our Values</a></li>
+          <li><a href="founder.html">About the Founder</a></li>
+          <li><a href="partners.html">Our Partners</a></li>
+          <li><a href="board.html">Board of Directors</a></li>
+        </ul>
+      </div>
+      <a href="donate.html" class="btn btn-primary">Donate</a>
+    </nav>
+  </div>
+</header>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="wrap">
+    <h1>About Us</h1>
+  </div>
+</section>
+
+<!-- PILLARS -->
+<section class="block">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">What We Believe</div>
+      <h3>"Rooted in Christ’s words"</h3>
+      <p>‘I thirsted and you gave me water.’</p>
+      <h2>Four ideas behind everything we do.</h2>
+    </div>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="ic">✦</div>
+        <h3>We respond to needs</h3>
+        <p>We believe some people have no help out there at all. No safety net, no backup plan, and no one coming. Our work begins with them.</p>
+      </div>
+      <div class="pillar">
+        <div class="ic">◆</div>
+        <h3>We are that somebody</h3>
+        <p>People often see a problem and say, "Somebody should do something." We believe that if we can help, we should. We are that somebody.</p>
+      </div>
+      <div class="pillar">
+        <div class="ic">○</div>
+        <h3>You don't have to wait for permission to show up</h3>
+        <p>You do not need a title, platform, or official invitation to notice a need and respond. Sometimes the next right step is simply to go, listen, and take action where help is actually useful.</p>
+      </div>
+      <div class="pillar">
+        <div class="ic">⚯</div>
+        <h3>Lives turn on small hinges</h3>
+        <p>We aim to use our resources where they can make the largest difference with the smallest necessary amount. Small sums carry very different weight in different parts of the world.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<!--<section class="block cta-strip" style="background: #184539;color: #fff;">-->
+<!--  <div class="wrap">-->
+<!--    <h2>Want to see this in action?</h2>-->
+<!--    <p style="color: #fff;">Read about the people we've helped, meet our founder and on-the-ground partners, or make a gift that puts these words into practice.</p>-->
+<!--    <div class="cta-row">-->
+<!--      <a href="board.html" class="btn btn-ghost" style="color: #fff;">Meet the Directors</a>-->
+<!--      <a href="donate.html" class="btn btn-primary" style="color: #fff;">Donate or get in touch →</a>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</section>-->
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="logo"><span class="mark">✦</span><span>Sitis Christi<small>Lives turn on small hinges</small></span></div>
+        <p>A faith-based humanitarian effort funding small, timely interventions for people at the edge of survival — in India, Sierra Leone, and Mexico.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="#impact">Impact Report</a></li>
+          <li><a href="updates.html">Updates</a></li>
+          <li><a href="founder.html">Founder</a></li>
+          <li><a href="partners.html">Partners</a></li>
+          <li><a href="board.html">Board</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:danielhigh@gmail.com">danielhigh@gmail.com</a></li>
+          <li><a href="tel:612-500-8766">612-500-8766</a></li>
+          <li>Bloomington, Minnesota, USA</li>
+          <li><a target="_blank" href="https://www.youtube.com/@SitisChristi">▶️ YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Sitis Christi. All rights reserved.</span>
+      <span>Nonprofit information &amp; tax status available on request.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Close mobile menu on link click (but not when opening a dropdown parent)
+  document.querySelectorAll('#menu a').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const parent = a.closest('.has-dropdown');
+      if (parent && window.innerWidth <= 880 && a.parentElement === parent) {
+        e.preventDefault();
+        parent.classList.toggle('open');
+        return;
+      }
+      document.getElementById('menu').classList.remove('open');
+    });
+  });
+</script>
+</body>
+</html>

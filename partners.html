@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Partners — Sitis Christi</title>
+<meta name="description" content="Meet the on-the-ground partners who make Sitis Christi's work in Sierra Leone possible — coordinating care, connecting amputees, and ensuring every resource reaches the right person.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1d2521;
+    --ink-soft: #4a5650;
+    --paper: #faf7f1;
+    --paper-2: #f1ece2;
+    --line: #e3dccf;
+    --brand: #1f5d4c;
+    --brand-dark: #163f34;
+    --accent: #c9742b;
+    --accent-soft: #f3e2cf;
+    --white: #ffffff;
+    --shadow: 0 10px 40px -18px rgba(22, 63, 52, .35);
+    --radius: 16px;
+    --maxw: 1120px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 { font-family: 'Fraunces', Georgia, serif; line-height: 1.12; letter-spacing: -0.01em; }
+  a { color: var(--brand); text-decoration: none; }
+  img { max-width: 100%; display: block; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  .eyebrow {
+    font-family: 'Inter', sans-serif; font-weight: 600; font-size: .78rem;
+    letter-spacing: .16em; text-transform: uppercase; color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: .5em;
+    font-weight: 600; font-size: .98rem; padding: 14px 26px; border-radius: 999px;
+    transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    cursor: pointer; border: none;
+  }
+  .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 8px 22px -10px rgba(201,116,43,.8); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 26px -10px rgba(201,116,43,.9); }
+  .btn-ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--line); }
+  .btn-ghost:hover { border-color: var(--brand); color: var(--brand); }
+
+  /* ---- NAV ---- */
+  header.nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(250,247,241,.85); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 70px; }
+  .logo { display: flex; align-items: center; gap: 12px; font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.32rem; color: var(--ink); }
+  .logo .mark {
+    width: 38px; height: 38px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+    display: grid; place-items: center; color: #fff; font-size: 1.1rem; flex: none;
+  }
+  .logo small { display:block; font-family:'Inter',sans-serif; font-weight:500; font-size:.62rem; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-soft); margin-top:2px; }
+  nav.links { display: flex; align-items: center; gap: 28px; }
+  nav.links a { color: var(--ink-soft); font-weight: 500; font-size: .94rem; }
+  nav.links a:hover { color: var(--brand); }
+  nav.links a.current { color: var(--brand); font-weight: 600; }
+  .nav-toggle { display:none; background:none; border:none; font-size:1.6rem; color:var(--ink); cursor:pointer; }
+
+  /* ---------- NAV DROPDOWN ---------- */
+  .has-dropdown { position: relative; }
+  .has-dropdown > a { display: flex; align-items: center; gap: 5px; cursor: pointer; }
+  .has-dropdown > a .caret { font-size: .62rem; transition: transform .15s ease; }
+  .has-dropdown:hover > a .caret { transform: rotate(180deg); }
+  .dropdown {
+    list-style: none; position: absolute; top: calc(100% + 14px); left: 50%; transform: translateX(-50%);
+    background: var(--white); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow);
+    min-width: 220px; padding: 8px; opacity: 0; visibility: hidden; transform: translateX(-50%) translateY(6px);
+    transition: opacity .15s ease, transform .15s ease, visibility .15s ease;
+  }
+  .has-dropdown:hover .dropdown { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+  .dropdown a { display: block; padding: 9px 14px; border-radius: 8px; font-size: .9rem; white-space: nowrap; }
+  .dropdown a:hover { background: var(--paper-2); color: var(--brand); }
+
+  @media (max-width: 880px) {
+    nav.links { position: absolute; top: 70px; left: 0; right: 0; flex-direction: column; gap: 0;
+      background: var(--paper); border-bottom: 1px solid var(--line); display: none; padding: 8px 0; }
+    nav.links.open { display: flex; }
+    nav.links a { padding: 12px 24px; width: 100%; }
+    nav.links .btn { margin: 10px 24px; }
+    .nav-toggle { display: block; }
+    .has-dropdown { width: 100%; }
+    .dropdown { position: static; transform: none; opacity: 1; visibility: visible; box-shadow: none;
+      border: none; border-radius: 0; display: none; min-width: 0; padding: 0 0 0 14px; background: transparent; }
+    .has-dropdown.open .dropdown { display: block; }
+    .has-dropdown:hover .dropdown { transform: none; }
+  }
+
+section#india-partners {
+    padding-top: 60px;
+}
+  /* ---- PAGE HERO ---- */
+  .page-hero {
+    position: relative; overflow: hidden;
+    background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(31,93,76,.10), transparent 60%),
+      radial-gradient(900px 500px at 0% 110%, rgba(201,116,43,.10), transparent 55%);
+    padding: 15px 0 20px; text-align: center;
+  }
+  .page-hero h1 { font-size: clamp(2.4rem, 5.5vw, 3.6rem); font-weight: 600; }
+  .page-hero p.lead { font-size: 1.12rem; color: var(--ink-soft); margin: 20px auto 0; max-width: 42em; }
+
+  /* ---- SECTION ---- */
+  section.block { padding: 25px 0; }
+  .section-head { max-width: 46em; margin-bottom: 52px; }
+  .section-head h2 { font-size: clamp(2rem, 4vw, 2.9rem); font-weight: 600; }
+  .section-head p { color: var(--ink-soft); font-size: 1.1rem; margin-top: 14px; }
+  .alt { background: var(--paper-2); }
+
+  /* ---- REGION LABEL ---- */
+  .region-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Inter', sans-serif; font-size: .8rem; font-weight: 700;
+    letter-spacing: .14em; text-transform: uppercase;
+    color: var(--brand); background: rgba(31,93,76,.08);
+    padding: 6px 16px; border-radius: 999px; margin-bottom: 36px;
+  }
+  .region-label::before { content: '📍'; font-size: .9rem; }
+
+  /* ---- PARTNER CARDS ---- */
+  .partners-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+
+  .partner-card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    transition: box-shadow .2s ease, transform .2s ease;
+  }
+  .partner-card:hover { box-shadow: var(--shadow); transform: translateY(-4px); }
+
+  .partner-photo {
+    width: 100%; aspect-ratio: 1 / 1;
+    overflow: hidden; background: var(--paper-2);
+  }
+  .partner-photo img {
+    width: 100%; height: 100%; object-fit: cover; object-position: center top;
+    transition: transform .4s ease;
+  }
+  .partner-card:hover .partner-photo img { transform: scale(1.04); }
+
+  .partner-body {
+    padding: 28px 26px 30px;
+    display: flex; flex-direction: column; gap: 12px; flex: 1;
+  }
+  .partner-body h3 { font-size: 1.35rem; font-weight: 600; }
+
+  .partner-roles { display: flex; flex-wrap: wrap; gap: 7px; }
+  .partner-role {
+    font-family: 'Inter', sans-serif; font-size: .73rem; font-weight: 600;
+    padding: 4px 11px; border-radius: 999px;
+    background: var(--paper-2); border: 1px solid var(--line); color: var(--ink-soft);
+  }
+  .partner-role.highlight {
+    background: var(--accent-soft); border-color: rgba(201,116,43,.3); color: var(--accent);
+  }
+
+  .partner-body p { color: var(--ink-soft); font-size: .97rem; line-height: 1.75; }
+
+  @media (max-width: 900px) { .partners-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .partners-grid { grid-template-columns: 1fr; } }
+
+  /* ---- QUOTE BAND ---- */
+  .quote-band {
+    background: linear-gradient(160deg, var(--brand) 0%, var(--brand-dark) 100%);
+    color: #fff; text-align: center;
+  }
+  .quote-band .wrap { padding: 64px 24px; }
+  .quote-band p {
+    font-family: 'Fraunces', serif; font-size: clamp(1.3rem, 2.6vw, 1.9rem);
+    font-style: italic; font-weight: 500; max-width: 34em; margin: 0 auto;
+  }
+  .quote-band small {
+    display: block; font-family: 'Inter', sans-serif; font-style: normal;
+    font-size: .82rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+    opacity: .78; margin-top: 18px;
+  }
+
+  /* ---- CTA ---- */
+  .cta-strip { text-align: center; }
+  .cta-strip h2 { font-size: clamp(1.8rem, 3.6vw, 2.5rem); font-weight: 600; margin-bottom: 16px; }
+  .cta-strip p { color: var(--ink-soft); font-size: 1.06rem; max-width: 32em; margin: 0 auto 30px; }
+  .cta-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  /* ---- FOOTER ---- */
+  footer { background: var(--ink); color: rgba(255,255,255,.75); padding: 60px 0 30px; }
+  .foot-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,.12); }
+  footer .logo { color: #fff; margin-bottom: 14px; }
+  footer .logo small { color: rgba(255,255,255,.6); }
+  footer p { font-size: .96rem; }
+  footer h4 { color: #fff; font-family:'Inter',sans-serif; font-size:.82rem; letter-spacing:.14em; text-transform:uppercase; margin-bottom: 16px; }
+  footer ul { list-style: none; }
+  footer ul li { margin-bottom: 10px; }
+  footer ul a { color: rgba(255,255,255,.75); }
+  footer ul a:hover { color: var(--accent); }
+  .foot-bottom { display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; padding-top: 24px; font-size:.85rem; color: rgba(255,255,255,.5); }
+  @media (max-width: 760px) { .foot-grid { grid-template-columns: 1fr; gap: 30px; } }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="logo">
+      <img style="max-width: 123px;" src="./images/logo.png">
+    </a>
+    <button class="nav-toggle" aria-label="Menu" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
+    <nav class="links" id="menu">
+      <a href="index.html">Home</a>
+      <div class="has-dropdown">
+        <a href="index.html#impact">Impact Report <span class="caret">▾</span></a>
+        <ul class="dropdown">
+          <li><a href="2024.html">2024</a></li>
+          <li><a href="2025.html">2025</a></li>
+          <li><a href="2026.html">2026</a></li>
+          <li><a href="unfinished_stories.html">Unfinished Stories</a></li>
+          <li><a href="updates.html">Updates</a></li>
+        </ul>
+      </div>
+      <div class="has-dropdown">
+        <a href="about.html">About Us <span class="caret">▾</span></a>
+        <ul class="dropdown">
+            <li><a href="about.html">Our Values</a></li>
+          <li><a href="founder.html">About the Founder</a></li>
+          <li><a href="partners.html" class="current">Our Partners</a></li>
+          <li><a href="board.html">Board of Directors</a></li>
+        </ul>
+      </div>
+      <a href="donate.html" class="btn btn-primary">Donate</a>
+    </nav>
+  </div>
+</header>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="wrap">
+    <div class="eyebrow"></div>
+    <h1>Our Partners</h1>
+  </div>
+</section>
+
+<!-- SIERRA LEONE PARTNERS -->
+<section class="block" id="sierra-leone-partners">
+  <div class="wrap">
+   <!--  <div class="section-head">
+      <div class="eyebrow">On-the-Ground Partners</div>
+      <h2>Sierra Leone</h2>
+      <p>Our work in Sierra Leone — particularly in and around Waterloo — is made possible by three individuals with deep community ties, professional credibility, and personal investment in the people we serve.</p>
+    </div> -->
+
+    <div class="region-label">PARTNERS In Sierra Leone </div>
+
+    <div class="partners-grid">
+
+      <!-- FODAY SESAY -->
+      <div class="partner-card">
+        <div class="partner-photo"><img src="./images/foday.jpg" alt="Foday Sesay"></div>
+        <div class="partner-body">
+          <h3>Foday Sesay</h3>
+          <p>Foday coordinates our work in Sierra Leone and serves as the key bridge between the founder and local community members. He has passed the UN test and brings professional law-enforcement experience as a detective and police officer. His experience spans a wide range of cases — from a human-sacrifice investigation that resulted in a conviction, as well as other serious violent-crime work, to helping resolve domestic disputes — helping ensure our work is organized, informed, and responsive on the ground.</p>
+        </div>
+      </div>
+
+      <!-- MARIAN SESAY -->
+      <div class="partner-card">
+        <div class="partner-photo"><img src="./images/marian.png" alt="Marian Sesay"></div>
+        <div class="partner-body">
+          <h3>Marian Sesay</h3>
+          <p>Marian serves as the administrator of Apostolic Christian School of Waterloo. She is a key bridge for identifying children who need targeted intervention and ensuring they get connected to the right support. Marian helps coordinate transportation and travel for children — including trips related to prosthetic fittings — and she communicates child-specific needs to Sitis Christi, such as support for amputees and essential school projects, including providing a water tap for the school of approximately 1,000 students.</p>
+        </div>
+      </div>
+
+      <!-- ABU BAKAR -->
+      <div class="partner-card">
+        <div class="partner-photo"><img src="./images/abubakar.png" alt="Abu Bakar"></div>
+        <div class="partner-body">
+          <h3>Abu Bakar</h3>
+          <p>Abu Bakar leads on-the-ground coordination in Waterloo by building relationships with the local amputee community and connecting individuals to support. Drawing on lived experience as an arm amputee, he documents and shares amputees' stories through photos, video, and interviews to better understand needs and advocate for care. He has long worked alongside the amputee community and serves as a liaison between Sitis Christi and the Waterloo Amputee Shelter. He also coaches a soccer team of amputees.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!--Indian Parterner-->
+<section class="block" id="india-partners" style="margin-top: -50px;">
+  <div class="wrap">
+
+    <div class="region-label">Partners in India</div>
+
+    <div class="partners-grid">
+
+      <!-- Sandhya  -->
+      <div class="partner-card">
+        <div class="partner-photo"><img src="./images/Sandhya.jpg" alt="Foday Sesay"></div>
+        <div class="partner-body">
+          <h3>Sandhya Narayanaswamy</h3>
+          <p>Sandhya has been a trusted friend and essential local contact for Sitis Christi in Pondicherry, India. Before I arrived, she helped scope out neighborhoods and identify people and families who were in need of help.</p>
+
+        <p>She also conducted interviews in the streets, helped us better understand local needs, and connected me with other partners who could support the work. Her local knowledge, relationships, and willingness to help have made many of our efforts in southern India possible.</p>
+        </div>
+      </div>
+
+      <!-- Sugamar -->
+      <div class="partner-card">
+        <div class="partner-photo"><img src="./images/Sugamar.jpg" alt="Marian Sesay"></div>
+        <div class="partner-body">
+          <h3>Sugamar Narayanaswamy</h3>
+          <p>Sugamar Narayanaswamy has been a helpful and steady presence during our work in India. As Sandhya's husband, he has been connected to our efforts through friendship, local knowledge, and the relationships that have helped make our visits more meaningful.
+          While his role has been more informal than hands-on, Sugamar has helped locate resources, offered practical perspective, and helped us better understand the culture and day-to-day realities of the community.We are thankful for Sugamar's support, his connection to Sandhya's work, and the quiet ways he has helped strengthen our relationships in Pondicherry..</p>
+        </div>
+      </div>
+
+      <!-- S Avinash -->
+      <div class="partner-card">
+        <div class="partner-photo"><img src="./images/Avinash.jpg" alt="Abu Bakar"></div>
+        <div class="partner-body">
+          <h3>S Avinash</h3>
+          <p>Avinash has been one of our most important local contacts in India. During multiple visits, he accompanied me through city neighborhoods, slums, and waste-picker colonies, helping with introductions, translation, transportation, and local guidance.</p>
+          <p>His help has made many visits, interviews, and reconnections possible, including efforts to locate people first met more than twenty years ago. I am grateful for his friendship, practical help, and the many miles we have traveled together in service of others.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- CTA -->
+<section class="block cta-strip" style="background: #184538;color: #fff;">
+  <div class="wrap">
+    <h2>Want to support this work?</h2>
+    <p style="color: #fff;">Every dollar directed through these partnerships reaches someone who has no other safety net. Small amounts carry real weight.</p>
+    <div class="cta-row">
+      <a style="color: #fff;" href="about.html" class="btn btn-ghost">Our mission</a>
+      <a href="donate.html" class="btn btn-primary">Donate now →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="logo"><span class="mark">✦</span><span>Sitis Christi<small>Lives turn on small hinges</small></span></div>
+        <p>A faith-based humanitarian effort funding small, timely interventions for people at the edge of survival — in India, Sierra Leone, and Mexico.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="#impact">Impact Report</a></li>
+          <li><a href="updates.html">Updates</a></li>
+          <li><a href="founder.html">Founder</a></li>
+          <li><a href="partners.html">Partners</a></li>
+          <li><a href="board.html">Board</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:danielhigh@gmail.com">danielhigh@gmail.com</a></li>
+          <li><a href="tel:612-500-8766">612-500-8766</a></li>
+          <li>Bloomington, Minnesota, USA</li>
+          <li><a target="_blank" href="https://www.youtube.com/@SitisChristi">▶️ YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Sitis Christi. All rights reserved.</span>
+      <span>Nonprofit information &amp; tax status available on request.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('#menu a').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const parent = a.closest('.has-dropdown');
+      if (parent && window.innerWidth <= 880 && a.parentElement === parent) {
+        e.preventDefault();
+        parent.classList.toggle('open');
+        return;
+      }
+      document.getElementById('menu').classList.remove('open');
+    });
+  });
+</script>
+</body>
+</html>
