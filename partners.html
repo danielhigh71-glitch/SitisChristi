@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-fnOfmWp_3XepIo3gjmgfh.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Partners — Sitis Christi</title>
@@ -261,8 +268,8 @@ section#india-partners {
           <li><a href="board.html">Board of Directors</a></li>
         </ul>
       </div>
-<button type="button" class="btn btn-ghost" onclick="openNewsletterModal()">📩 Newsletter</button>
-      <a href="donate.html"       <a href="donate.html" class="btn btn-primary">Donate</a>
+<button type="button" class="btn btn-ghost" onclick="openNewsletterModal();plausible('Newsletter Open')">📩 Newsletter</button>
+      <a href="donate.html" class="btn btn-primary" onclick="plausible('Donate Click')">Donate</a>
     </nav>
   </div>
 </header>
@@ -371,7 +378,7 @@ section#india-partners {
     <p style="color: #fff;">Every dollar directed through these partnerships reaches someone who has no other safety net. Small amounts carry real weight.</p>
     <div class="cta-row">
       <a style="color: #fff;" href="about.html" class="btn btn-ghost">Our mission</a>
-      <a href="donate.html" class="btn btn-primary">Donate now →</a>
+      <a href="donate.html" class="btn btn-primary" onclick="plausible('Donate Click')">Donate now →</a>
     </div>
   </div>
 </section>
@@ -476,6 +483,7 @@ section#india-partners {
       const data = await res.json();
       if (data.success) {
         statusEl.textContent = "Thanks! You're subscribed.";
+        plausible('Newsletter Signup');
         statusEl.className = 'nl-status ok';
         form.reset();
       } else {
