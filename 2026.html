@@ -240,6 +240,23 @@
   .foot-bottom { display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; padding-top: 24px; font-size:.85rem; color: rgba(255,255,255,.5); }
   @media (max-width: 760px) { .foot-grid { grid-template-columns: 1fr; gap: 30px; } }
 </style>
+<style id="nl-styles">
+  .nl-overlay { position: fixed; inset: 0; background: rgba(29,37,33,.55); backdrop-filter: blur(3px); display: flex; align-items: center; justify-content: center; z-index: 200; padding: 20px; }
+  .nl-overlay[hidden] { display: none; }
+  .nl-modal { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); max-width: 420px; width: 100%; padding: 32px 28px 28px; position: relative; }
+  .nl-modal h3 { font-size: 1.4rem; margin-bottom: 8px; }
+  .nl-modal p { color: var(--ink-soft); font-size: .95rem; margin-bottom: 18px; }
+  .nl-close { position: absolute; top: 14px; right: 16px; background: none; border: none; font-size: 1.4rem; line-height: 1; color: var(--ink-soft); cursor: pointer; }
+  .nl-close:hover { color: var(--ink); }
+  #newsletter-form { display: flex; flex-direction: column; gap: 12px; }
+  #newsletter-form input[type="email"] { font-family: 'Inter', sans-serif; font-size: .95rem; padding: 12px 14px; border: 1.5px solid var(--line); border-radius: 10px; color: var(--ink); }
+  #newsletter-form input[type="email"]:focus { outline: none; border-color: var(--brand); }
+  #newsletter-form button[type="submit"] { width: 100%; justify-content: center; }
+  .nl-status { margin-top: 12px; font-size: .88rem; color: var(--ink-soft); min-height: 1.1em; }
+  .nl-status.ok { color: var(--brand); font-weight: 600; }
+  .nl-status.err { color: #b3432b; font-weight: 600; }
+</style>
+
 </head>
 <body>
 
@@ -271,7 +288,8 @@
           <li><a href="board.html">Board of Directors</a></li>
         </ul>
       </div>
-      <a href="donate.html" class="btn btn-primary">Donate</a>
+<button type="button" class="btn btn-ghost" onclick="openNewsletterModal()">📩 Newsletter</button>
+      <a href="donate.html"       <a href="donate.html" class="btn btn-primary">Donate</a>
     </nav>
   </div>
 </header>
@@ -426,5 +444,70 @@
     });
   });
 </script>
+<!-- NEWSLETTER MODAL -->
+<div id="newsletter-modal" class="nl-overlay" hidden>
+  <div class="nl-modal">
+    <button type="button" class="nl-close" onclick="closeNewsletterModal()" aria-label="Close">&times;</button>
+    <h3>Get Our Newsletter</h3>
+    <p>Field updates from Sierra Leone, India, and Mexico — straight to your inbox.</p>
+    <form id="newsletter-form" onsubmit="return submitNewsletterForm(event)">
+      <input type="email" name="email" placeholder="you@example.com" required>
+      <!-- Replace YOUR_WEB3FORMS_ACCESS_KEY below with your real access key from web3forms.com -->
+      <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY">
+      <input type="hidden" name="subject" value="New Newsletter Signup — Sitis Christi">
+      <input type="hidden" name="from_name" value="Sitis Christi Website">
+      <input type="text" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+      <button type="submit" class="btn btn-primary">Subscribe</button>
+    </form>
+    <p id="nl-status" class="nl-status"></p>
+  </div>
+</div>
+<script>
+  function openNewsletterModal() {
+    document.getElementById('newsletter-modal').hidden = false;
+  }
+  function closeNewsletterModal() {
+    document.getElementById('newsletter-modal').hidden = true;
+  }
+  document.getElementById('newsletter-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeNewsletterModal();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeNewsletterModal();
+  });
+  async function submitNewsletterForm(e) {
+    e.preventDefault();
+    const form = e.target;
+    const statusEl = document.getElementById('nl-status');
+    const btn = form.querySelector('button[type="submit"]');
+    statusEl.className = 'nl-status';
+    statusEl.textContent = 'Sending...';
+    btn.disabled = true;
+    try {
+      const formData = new FormData(form);
+      const payload = Object.fromEntries(formData.entries());
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (data.success) {
+        statusEl.textContent = "Thanks! You're subscribed.";
+        statusEl.className = 'nl-status ok';
+        form.reset();
+      } else {
+        statusEl.textContent = 'Something went wrong. Please try again.';
+        statusEl.className = 'nl-status err';
+      }
+    } catch (err) {
+      statusEl.textContent = 'Something went wrong. Please try again.';
+      statusEl.className = 'nl-status err';
+    }
+    btn.disabled = false;
+    return false;
+  }
+</script>
+
 </body>
 </html>
