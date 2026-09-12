@@ -362,6 +362,11 @@
     .donate-embed { max-width: 650px; margin: 90px auto; padding: 0 24px 60px; transition: max-width .2s ease; }
     .donate-embed.full-width { max-width: 1000px; }
     #donate-iframe-step iframe { width: 100%; }
+    .donate-success { text-align: center; padding: 50px 20px; }
+    .donate-success h3 { font-size: 1.6rem; margin-bottom: 6px; }
+    .donate-success-amount { font-size: 2.2rem; font-weight: 700; color: var(--brand); margin: 10px 0; }
+    .donate-success-meta { font-size: .8rem; color: var(--ink-soft); margin-top: 10px; }
+    .donate-success-btn { display: inline-block; margin-top: 22px; padding: 10px 22px; font-size: .9rem; }
     #donate-iframe-step iframe { min-width: 100%; }
     .donate-embed h1 { font-size: 2.2rem; margin-bottom: 10px; }
     .donate-sub { color: var(--ink-soft); margin-bottom: 32px; }
@@ -393,8 +398,18 @@
           document.querySelector('.donate-embed').classList.remove('full-width');
           break;
         case 'transactResponse':
+          var txResponse = {};
+          try { txResponse = JSON.parse(params['response']); } catch (e) {}
+          var amountPaid = document.getElementById('donate-amount').value;
           document.getElementById('donate-iframe-step').innerHTML =
-            '<div style="text-align:center;padding:40px 20px;"><h3>Thank you for your donation!</h3><p>A confirmation has been sent to your email.</p></div>';
+            '<div class="donate-success">' +
+              '<h3>Thank you for your donation!</h3>' +
+              '<p class="donate-success-amount">$' + amountPaid + '</p>' +
+              '<p>A confirmation has been sent to your email.</p>' +
+              (txResponse.transId ? '<p class="donate-success-meta">Transaction ID: ' + txResponse.transId + '</p>' : '') +
+              '<a href="https://sitischristi.com/" class="btn btn-primary donate-success-btn">Back to Home</a>' +
+            '</div>';
+          document.querySelector('.donate-embed').classList.remove('full-width');
           if (typeof plausible !== 'undefined') plausible('Donate Completed');
           break;
       }
