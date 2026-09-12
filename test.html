@@ -359,7 +359,9 @@
   </section>
 
   <style>
-    .donate-embed { max-width: 650px; margin: 90px auto; padding: 0 24px 60px; }
+    .donate-embed { max-width: 650px; margin: 90px auto; padding: 0 24px 60px; transition: max-width .2s ease; }
+    .donate-embed.full-width { max-width: 1000px; }
+    #donate-iframe-step iframe { width: 100%; }
     #donate-iframe-step iframe { min-width: 100%; }
     .donate-embed h1 { font-size: 2.2rem; margin-bottom: 10px; }
     .donate-sub { color: var(--ink-soft); margin-bottom: 32px; }
@@ -388,6 +390,7 @@
         case 'cancel':
           document.getElementById('donate-iframe-step').style.display = 'none';
           document.getElementById('donate-amount-step').style.display = 'block';
+          document.querySelector('.donate-embed').classList.remove('full-width');
           break;
         case 'transactResponse':
           document.getElementById('donate-iframe-step').innerHTML =
@@ -442,6 +445,7 @@
           document.getElementById('donate-token').value = data.token;
           document.getElementById('donate-amount-step').style.display = 'none';
           document.getElementById('donate-iframe-step').style.display = 'block';
+          document.querySelector('.donate-embed').classList.add('full-width');
           document.getElementById('send_tk').submit();
           if (typeof plausible !== 'undefined') plausible('Donate Iframe Loaded');
         } else {
