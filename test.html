@@ -443,6 +443,9 @@
         cleanup();
         if (data.token) {
           document.getElementById('donate-token').value = data.token;
+          document.getElementById('send_tk').action = data.sandbox
+            ? 'https://test.authorize.net/payment/payment'
+            : 'https://accept.authorize.net/payment/payment';
           document.getElementById('donate-amount-step').style.display = 'none';
           document.getElementById('donate-iframe-step').style.display = 'block';
           document.querySelector('.donate-embed').classList.add('full-width');
