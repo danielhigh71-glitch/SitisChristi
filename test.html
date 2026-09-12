@@ -359,7 +359,8 @@
   </section>
 
   <style>
-    .donate-embed { max-width: 560px; margin: 90px auto; padding: 0 24px 60px; }
+    .donate-embed { max-width: 650px; margin: 90px auto; padding: 0 24px 60px; }
+    #donate-iframe-step iframe { min-width: 100%; }
     .donate-embed h1 { font-size: 2.2rem; margin-bottom: 10px; }
     .donate-sub { color: var(--ink-soft); margin-bottom: 32px; }
     #donate-amount-step label { display:block; font-weight:600; margin-bottom: 8px; font-size: .92rem; }
@@ -374,6 +375,38 @@
   </style>
 
   <script>
+    // Listens for size/status messages relayed by iframe-communicator.html
+    window.CommunicationHandler = {};
+    window.CommunicationHandler.onReceiveCommunication = function (argument) {
+      var params = parseQueryString(argument.qstr);
+      switch (params['action']) {
+        case 'resizeWindow':
+          var iframeEl = document.getElementById('donate_iframe');
+          if (params['width']) iframeEl.style.width = params['width'] + 'px';
+          if (params['height']) iframeEl.style.height = params['height'] + 'px';
+          break;
+        case 'cancel':
+          document.getElementById('donate-iframe-step').style.display = 'none';
+          document.getElementById('donate-amount-step').style.display = 'block';
+          break;
+        case 'transactResponse':
+          document.getElementById('donate-iframe-step').innerHTML =
+            '<div style="text-align:center;padding:40px 20px;"><h3>Thank you for your donation!</h3><p>A confirmation has been sent to your email.</p></div>';
+          if (typeof plausible !== 'undefined') plausible('Donate Completed');
+          break;
+      }
+    };
+
+    function parseQueryString(str) {
+      var vars = [];
+      var arr = str.split('&');
+      for (var i = 0; i < arr.length; i++) {
+        var pair = arr[i].split('=');
+        vars[pair[0]] = decodeURIComponent(pair[1] || '');
+      }
+      return vars;
+    }
+
     // Paste the Web App URL from your Google Apps Script deployment here:
     var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz8DY5dgfVQfO-aEFDj2HAJa-jeeVLdg7YGoMUibBY7_W-J56JhaZiu9Rrt1S_Ht704/exec";
 
