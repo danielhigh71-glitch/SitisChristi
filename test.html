@@ -381,7 +381,7 @@
       document.getElementById('donate-amount').value = v;
     }
 
-    async function startDonation() {
+    function startDonation() {
       var amount = parseFloat(document.getElementById('donate-amount').value);
       var errorEl = document.getElementById('donate-error');
       errorEl.textContent = '';
@@ -390,13 +390,21 @@
         return;
       }
       if (typeof plausible !== 'undefined') plausible('Donate Started');
-      try {
-        var res = await fetch(APPS_SCRIPT_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain' },
-          body: JSON.stringify({ amount: amount })
-        });
-        var data = await res.json();
+
+      var callbackName = 'donateCb_' + Date.now();
+      var timeoutId = setTimeout(function () {
+        errorEl.textContent = 'Request timed out. Please try again.';
+        cleanup();
+      }, 15000);
+
+      function cleanup() {
+        clearTimeout(timeoutId);
+        delete window[callbackName];
+        if (script.parentNode) script.parentNode.removeChild(script);
+      }
+
+      window[callbackName] = function (data) {
+        cleanup();
         if (data.token) {
           document.getElementById('donate-token').value = data.token;
           document.getElementById('donate-amount-step').style.display = 'none';
@@ -406,9 +414,15 @@
         } else {
           errorEl.textContent = data.error || 'Something went wrong. Please try again.';
         }
-      } catch (err) {
+      };
+
+      var script = document.createElement('script');
+      script.src = APPS_SCRIPT_URL + '?amount=' + encodeURIComponent(amount) + '&callback=' + callbackName;
+      script.onerror = function () {
+        cleanup();
         errorEl.textContent = 'Something went wrong. Please try again.';
-      }
+      };
+      document.body.appendChild(script);
     }
   </script>
 
