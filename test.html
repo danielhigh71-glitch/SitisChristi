@@ -401,16 +401,45 @@
           var txResponse = {};
           try { txResponse = JSON.parse(params['response']); } catch (e) {}
           var amountPaid = document.getElementById('donate-amount').value;
-          document.getElementById('donate-iframe-step').innerHTML =
-            '<div class="donate-success">' +
-              '<h3>Thank you for your donation!</h3>' +
-              '<p class="donate-success-amount">$' + amountPaid + '</p>' +
-              '<p>A confirmation has been sent to your email.</p>' +
-              (txResponse.transId ? '<p class="donate-success-meta">Transaction ID: ' + txResponse.transId + '</p>' : '') +
-              '<a href="https://sitischristi.com/" class="btn btn-primary donate-success-btn">Back to Home</a>' +
-            '</div>';
+          var responseCode = txResponse.responseCode;
+          var iframeStepEl = document.getElementById('donate-iframe-step');
+
+          if (responseCode === '1') {
+            // Approved
+            iframeStepEl.innerHTML =
+              '<div class="donate-success">' +
+                '<h3>Thank you for your donation!</h3>' +
+                '<p class="donate-success-amount">$' + amountPaid + '</p>' +
+                '<p>A confirmation has been sent to your email.</p>' +
+                (txResponse.transId ? '<p class="donate-success-meta">Transaction ID: ' + txResponse.transId + '</p>' : '') +
+                '<a href="https://sitischristi.com/" class="btn btn-primary donate-success-btn">Back to Home</a>' +
+              '</div>';
+            if (typeof plausible !== 'undefined') plausible('Donate Completed');
+          } else if (responseCode === '4') {
+            // Held for review by Authorize.net's fraud detection
+            iframeStepEl.innerHTML =
+              '<div class="donate-success">' +
+                '<h3>Donation received — pending review</h3>' +
+                '<p class="donate-success-amount">$' + amountPaid + '</p>' +
+                '<p>Your donation was submitted and is being reviewed before it\'s finalized. This is a routine security check and no further action is needed from you.</p>' +
+                (txResponse.transId ? '<p class="donate-success-meta">Transaction ID: ' + txResponse.transId + '</p>' : '') +
+                '<a href="https://sitischristi.com/" class="btn btn-primary donate-success-btn">Back to Home</a>' +
+              '</div>';
+            if (typeof plausible !== 'undefined') plausible('Donate Pending Review');
+          } else {
+            // Declined or error
+            var declineMsg = (txResponse.messages && txResponse.messages[0] && txResponse.messages[0].description)
+              ? txResponse.messages[0].description
+              : 'Your card could not be charged. Please check your details or try a different card.';
+            iframeStepEl.innerHTML =
+              '<div class="donate-success">' +
+                '<h3>We couldn\'t process that donation</h3>' +
+                '<p style="color:#b3432b;">' + declineMsg + '</p>' +
+                '<a href="donate.html" class="btn btn-primary donate-success-btn">Try Again</a>' +
+              '</div>';
+            if (typeof plausible !== 'undefined') plausible('Donate Declined');
+          }
           document.querySelector('.donate-embed').classList.remove('full-width');
-          if (typeof plausible !== 'undefined') plausible('Donate Completed');
           break;
       }
     };
@@ -442,15 +471,26 @@
       }
       if (typeof plausible !== 'undefined') plausible('Donate Started');
 
+      var FALLBACK_URL = 'https://simplecheckout.authorize.net/payment/CatalogPayment.aspx?LinkId=29db7083-97ee-40a5-9536-046cede8af76';
+
+      function goToFallback(reason) {
+        if (typeof plausible !== 'undefined') plausible('Donate Auto-Fallback: ' + reason);
+        errorEl.textContent = "Redirecting you to our secure donation page...";
+        setTimeout(function () {
+          window.location.href = FALLBACK_URL;
+        }, 1200);
+      }
+
       var callbackName = 'donateCb_' + Date.now();
       var timeoutId = setTimeout(function () {
-        errorEl.textContent = 'Request timed out. Please try again.';
         cleanup();
-      }, 15000);
+        goToFallback('timeout');
+      }, 8000);
 
       function cleanup() {
         clearTimeout(timeoutId);
-        delete window[callbackName];
+        // Replace (not delete) so a late-arriving response can't throw a ReferenceError
+        window[callbackName] = function () {};
         if (script.parentNode) script.parentNode.removeChild(script);
       }
 
@@ -475,7 +515,7 @@
       script.src = APPS_SCRIPT_URL + '?amount=' + encodeURIComponent(amount) + '&callback=' + callbackName;
       script.onerror = function () {
         cleanup();
-        errorEl.textContent = 'Something went wrong. Please try again.';
+        goToFallback('blocked');
       };
       document.body.appendChild(script);
     }
