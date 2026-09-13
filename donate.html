@@ -324,12 +324,159 @@
         </ul>
       </div>
 <button type="button" class="btn btn-ghost" onclick="openNewsletterModal();plausible('Newsletter Open')">📩 Newsletter</button>
-      <a href="https://simplecheckout.authorize.net/payment/CatalogPayment.aspx?LinkId=29db7083-97ee-40a5-9536-046cede8af76" class="btn btn-primary" onclick="plausible('Donate Click')">Donate</a>
+      <a href="donate.html" class="btn btn-primary" onclick="plausible('Donate Click')">Donate</a>
     </nav>
   </div>
 </header>
 
-  <h1 style="padding: 200px;text-align: center;">Coming Soon</h1>
+  <section class="donate-embed">
+    <h1>Support Our Work</h1>
+    <p class="donate-sub">Give securely, right here — you'll never leave sitischristi.com.</p>
+
+    <div id="donate-amount-step">
+      <label for="donate-amount">Donation amount (USD)</label>
+      <input type="number" id="donate-amount" min="1" step="1" placeholder="e.g. 50">
+      <div class="amount-presets">
+        <button type="button" onclick="setAmount(25)">$25</button>
+        <button type="button" onclick="setAmount(50)">$50</button>
+        <button type="button" onclick="setAmount(100)">$100</button>
+        <button type="button" onclick="setAmount(250)">$250</button>
+      </div>
+      <button type="button" class="btn btn-primary" onclick="startDonation()" style="width:100%;justify-content:center;">Continue to Payment</button>
+      <p id="donate-error" class="donate-error"></p>
+      <p class="donate-fallback">Having trouble? <a href="https://simplecheckout.authorize.net/payment/CatalogPayment.aspx?LinkId=29db7083-97ee-40a5-9536-046cede8af76" onclick="plausible('Donate Click - Fallback')">Use our secure external donation page instead</a>.</p>
+    </div>
+
+    <div id="donate-iframe-step" style="display:none;">
+      <form id="send_tk" action="https://accept.authorize.net/payment/payment" method="post" target="donate_iframe" style="display:none;">
+        <input type="hidden" name="token" id="donate-token" value="">
+      </form>
+      <iframe name="donate_iframe" id="donate_iframe" width="100%" height="700" scrolling="no" frameborder="0"></iframe>
+    </div>
+  </section>
+
+  <style>
+    .donate-embed { max-width: 650px; margin: 90px auto; padding: 0 24px 60px; transition: max-width .2s ease; }
+    .donate-embed.full-width { max-width: 1000px; }
+    #donate-iframe-step iframe { width: 100%; }
+    .donate-success { text-align: center; padding: 50px 20px; }
+    .donate-success h3 { font-size: 1.6rem; margin-bottom: 6px; }
+    .donate-success-amount { font-size: 2.2rem; font-weight: 700; color: var(--brand); margin: 10px 0; }
+    .donate-success-meta { font-size: .8rem; color: var(--ink-soft); margin-top: 10px; }
+    .donate-success-btn { display: inline-block; margin-top: 22px; padding: 10px 22px; font-size: .9rem; }
+    #donate-iframe-step iframe { min-width: 100%; }
+    .donate-embed h1 { font-size: 2.2rem; margin-bottom: 10px; }
+    .donate-sub { color: var(--ink-soft); margin-bottom: 32px; }
+    #donate-amount-step label { display:block; font-weight:600; margin-bottom: 8px; font-size: .92rem; }
+    #donate-amount { width: 100%; font-family: 'Inter', sans-serif; font-size: 1.1rem; padding: 14px 16px; border: 1.5px solid var(--line); border-radius: 10px; color: var(--ink); margin-bottom: 14px; }
+    #donate-amount:focus { outline: none; border-color: var(--brand); }
+    .amount-presets { display: flex; gap: 10px; margin-bottom: 22px; flex-wrap: wrap; }
+    .amount-presets button { flex: 1; min-width: 70px; padding: 10px 0; border: 1.5px solid var(--line); background: #fff; border-radius: 10px; font-family: 'Inter', sans-serif; font-weight: 600; color: var(--ink); cursor: pointer; }
+    .amount-presets button:hover { border-color: var(--brand); color: var(--brand); }
+    .donate-error { color: #b3432b; font-weight: 600; font-size: .9rem; min-height: 1.2em; margin-top: 12px; }
+    .donate-fallback { margin-top: 22px; font-size: .85rem; color: var(--ink-soft); text-align: center; }
+    .donate-fallback a { color: var(--ink-soft); }
+  </style>
+
+  <script>
+    // Listens for size/status messages relayed by iframe-communicator.html
+    window.CommunicationHandler = {};
+    window.CommunicationHandler.onReceiveCommunication = function (argument) {
+      var params = parseQueryString(argument.qstr);
+      switch (params['action']) {
+        case 'resizeWindow':
+          var iframeEl = document.getElementById('donate_iframe');
+          if (params['width']) iframeEl.style.width = params['width'] + 'px';
+          if (params['height']) iframeEl.style.height = params['height'] + 'px';
+          break;
+        case 'cancel':
+          document.getElementById('donate-iframe-step').style.display = 'none';
+          document.getElementById('donate-amount-step').style.display = 'block';
+          document.querySelector('.donate-embed').classList.remove('full-width');
+          break;
+        case 'transactResponse':
+          var txResponse = {};
+          try { txResponse = JSON.parse(params['response']); } catch (e) {}
+          var amountPaid = document.getElementById('donate-amount').value;
+          document.getElementById('donate-iframe-step').innerHTML =
+            '<div class="donate-success">' +
+              '<h3>Thank you for your donation!</h3>' +
+              '<p class="donate-success-amount">$' + amountPaid + '</p>' +
+              '<p>A confirmation has been sent to your email.</p>' +
+              (txResponse.transId ? '<p class="donate-success-meta">Transaction ID: ' + txResponse.transId + '</p>' : '') +
+              '<a href="https://sitischristi.com/" class="btn btn-primary donate-success-btn">Back to Home</a>' +
+            '</div>';
+          document.querySelector('.donate-embed').classList.remove('full-width');
+          if (typeof plausible !== 'undefined') plausible('Donate Completed');
+          break;
+      }
+    };
+
+    function parseQueryString(str) {
+      var vars = [];
+      var arr = str.split('&');
+      for (var i = 0; i < arr.length; i++) {
+        var pair = arr[i].split('=');
+        vars[pair[0]] = decodeURIComponent(pair[1] || '');
+      }
+      return vars;
+    }
+
+    // Paste the Web App URL from your Google Apps Script deployment here:
+    var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz8DY5dgfVQfO-aEFDj2HAJa-jeeVLdg7YGoMUibBY7_W-J56JhaZiu9Rrt1S_Ht704/exec";
+
+    function setAmount(v) {
+      document.getElementById('donate-amount').value = v;
+    }
+
+    function startDonation() {
+      var amount = parseFloat(document.getElementById('donate-amount').value);
+      var errorEl = document.getElementById('donate-error');
+      errorEl.textContent = '';
+      if (!amount || amount <= 0) {
+        errorEl.textContent = 'Please enter a valid amount.';
+        return;
+      }
+      if (typeof plausible !== 'undefined') plausible('Donate Started');
+
+      var callbackName = 'donateCb_' + Date.now();
+      var timeoutId = setTimeout(function () {
+        errorEl.textContent = 'Request timed out. Please try again.';
+        cleanup();
+      }, 15000);
+
+      function cleanup() {
+        clearTimeout(timeoutId);
+        delete window[callbackName];
+        if (script.parentNode) script.parentNode.removeChild(script);
+      }
+
+      window[callbackName] = function (data) {
+        cleanup();
+        if (data.token) {
+          document.getElementById('donate-token').value = data.token;
+          document.getElementById('send_tk').action = data.sandbox
+            ? 'https://test.authorize.net/payment/payment'
+            : 'https://accept.authorize.net/payment/payment';
+          document.getElementById('donate-amount-step').style.display = 'none';
+          document.getElementById('donate-iframe-step').style.display = 'block';
+          document.querySelector('.donate-embed').classList.add('full-width');
+          document.getElementById('send_tk').submit();
+          if (typeof plausible !== 'undefined') plausible('Donate Iframe Loaded');
+        } else {
+          errorEl.textContent = data.error || 'Something went wrong. Please try again.';
+        }
+      };
+
+      var script = document.createElement('script');
+      script.src = APPS_SCRIPT_URL + '?amount=' + encodeURIComponent(amount) + '&callback=' + callbackName;
+      script.onerror = function () {
+        cleanup();
+        errorEl.textContent = 'Something went wrong. Please try again.';
+      };
+      document.body.appendChild(script);
+    }
+  </script>
 
 
 <!-- FOOTER -->
